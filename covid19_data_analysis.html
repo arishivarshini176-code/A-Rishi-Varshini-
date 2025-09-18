@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Covid-19 Data Analysis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; background: #f7f7f7; }
+        h1 { color: #222; }
+        table { border-collapse: collapse; width: 100%; background: #fff; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background: #4CAF50; color: white; }
+        tr:nth-child(even) { background: #f2f2f2; }
+        .summary { margin: 20px 0; padding: 10px; background: #e7f3fe; border-left: 5px solid #2196F3; }
+    </style>
+</head>
+<body>
+    <h1>Covid-19 Data Analysis</h1>
+    <div class="summary">
+        <strong>Summary:</strong>
+        <span id="summary-text">Loading data...</span>
+    </div>
+    <table id="covid-table">
+        <thead>
+            <tr>
+                <th>Country</th>
+                <th>Total Cases</th>
+                <th>Total Deaths</th>
+                <th>Total Recovered</th>
+                <th>Active Cases</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be inserted here -->
+        </tbody>
+    </table>
+    <script>
+        // Example static data for demonstration
+        // Replace with fetch from an API for real data
+        const covidData = [
+            { country: "USA", cases: 104500000, deaths: 1140000, recovered: 102000000, active: 150000 },
+            { country: "India", cases: 44700000, deaths: 531000, recovered: 44100000, active: 6000 },
+            { country: "Brazil", cases: 37700000, deaths: 705000, recovered: 37000000, active: 20000 },
+            { country: "Russia", cases: 22000000, deaths: 400000, recovered: 21500000, active: 10000 },
+            { country: "France", cases: 39900000, deaths: 167000, recovered: 39600000, active: 12000 },
+        ];
+
+        function loadCovidTable(data) {
+            const tbody = document.querySelector("#covid-table tbody");
+            tbody.innerHTML = "";
+            data.forEach(row => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${row.country}</td>
+                    <td>${row.cases.toLocaleString()}</td>
+                    <td>${row.deaths.toLocaleString()}</td>
+                    <td>${row.recovered.toLocaleString()}</td>
+                    <td>${row.active.toLocaleString()}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function showSummary(data) {
+            let totalCases = 0, totalDeaths = 0, totalRecovered = 0, totalActive = 0;
+            data.forEach(row => {
+                totalCases += row.cases;
+                totalDeaths += row.deaths;
+                totalRecovered += row.recovered;
+                totalActive += row.active;
+            });
+            document.getElementById("summary-text").textContent =
+                `Total Cases: ${totalCases.toLocaleString()} | Total Deaths: ${totalDeaths.toLocaleString()} | Total Recovered: ${totalRecovered.toLocaleString()} | Active Cases: ${totalActive.toLocaleString()}`;
+        }
+
+        // Initialize table and summary
+        loadCovidTable(covidData);
+        showSummary(covidData);
+    </script>
+</body>
+</html>
